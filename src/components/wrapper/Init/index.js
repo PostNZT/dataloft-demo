@@ -11,21 +11,11 @@ import {
 const Init = (props) => {
   const { 
     children, 
-    getSavedUserRequest, 
-    getBucketIdentityRequest, 
-    getBucketDataFilesRequest 
   } = props
   const [init, setInit] = useState(false)
 
   useEffect(() => {
-    getSavedUserRequest()
-    .then(() => {
-      getBucketIdentityRequest()
-      .then((identity) => {
-        getBucketDataFilesRequest(identity)
-        setInit(true)
-      })
-    })   
+    setInit(true)   
   }, [])
 
   return (
