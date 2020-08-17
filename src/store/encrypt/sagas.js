@@ -44,49 +44,49 @@ function* encryptDataFileRequest(payload, meta) {
       const dataInfo = { filename, key, hint, fileBuffer: encrypted_data.file }
       yield put(encryptDataFileSuccess(dataInfo, meta))
 
-      // gets identity from 3box
-      const identity = yield call(boxRegister)
-      console.log({identity})
+      // // gets identity from 3box
+      // const identity = yield call(boxRegister)
+      // console.log({identity})
 
-      // Init Bucket
-      const {list, bucketKey, buckets} = yield call(setup, identity.identity)
+      // // Init Bucket
+      // const {list, bucketKey, buckets} = yield call(setup, identity.identity)
 
-      // returns list of files in a bucket
-      let dataFiles = list.itemsList
-      console.log(dataFiles)
+      // // returns list of files in a bucket
+      // let dataFiles = list.itemsList
+      // console.log(dataFiles)
 
-      // Inserts File to bucket
-      const insertFile = yield call(insertFileBucket, buckets, bucketKey, encrypted_data, filename)
-      console.log(insertFile.path.cid.string)
+      // // Inserts File to bucket
+      // const insertFile = yield call(insertFileBucket, buckets, bucketKey, encrypted_data, filename)
+      // console.log(insertFile.path.cid.string)
 
-      // Set Pow token ToDo Needs to set token from account creation
-      yield call(createFFS)
+      // // Set Pow token ToDo Needs to set token from account creation
+      // yield call(createFFS)
 
-      // Get pow addrs
-      const addrsList = yield call(addressList)
-      const addrs = addrsList[0].addr
+      // // Get pow addrs
+      // const addrsList = yield call(addressList)
+      // const addrs = addrsList[0].addr
 
-      // Get storage config obj with addrs
-      const storageConfig = yield call(CID_CONFIG, addrs)
+      // // Get storage config obj with addrs
+      // const storageConfig = yield call(CID_CONFIG, addrs)
 
-      // Set Default config
-      const set = yield call(setStorageConfig, storageConfig)
-      const cid = insertFile.path.cid.string
-      // const cids = new CID(0, 'dag-pb', cidh)
-      // const cid = cids.toString()
+      // // Set Default config
+      // const set = yield call(setStorageConfig, storageConfig)
+      // const cid = insertFile.path.cid.string
+      // // const cids = new CID(0, 'dag-pb', cidh)
+      // // const cid = cids.toString()
 
-      // Stage and Push data to ffs
-      const stagedPayload = {
-        encrypted_data, storageConfig, cid
-      }
-      const store = yield call(powergatePush, stagedPayload)
-      const { jobId } = store
+      // // Stage and Push data to ffs
+      // const stagedPayload = {
+      //   encrypted_data, storageConfig, cid
+      // }
+      // const store = yield call(powergatePush, stagedPayload)
+      // const { jobId } = store
 
-      // Get Job status
-      const cidS = yield call(cidStatus, cid)
-      const jobS = yield call(jobStatus, jobId)
-      console.log({cidS})
-      console.log({jobS})
+      // // Get Job status
+      // const cidS = yield call(cidStatus, cid)
+      // const jobS = yield call(jobStatus, jobId)
+      // console.log({cidS})
+      // console.log({jobS})
     } else {
       yield put(encryptDataFileFailure(data.error))
     }
